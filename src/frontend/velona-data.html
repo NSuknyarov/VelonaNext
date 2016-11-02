@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
+
+<dom-module id="velona-data">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <firebase-app
+        auth-domain="nextv3-eac68.firebaseapp.com"
+        database-url="https://nextv3-eac68.firebaseio.com"
+        api-key="AIzaSyA0UEiF6fR7B_64rWTRuymp6GEc1uB9VQE">
+    </firebase-app>
+    <firebase-query
+        id="queryCategories"
+        path="/categories"
+        data="{{dataCategories}}"
+        order-by-child="parent"
+        equal-to="[[categoryName]]">
+    </firebase-query>
+    <firebase-query
+        id="queryProducts"
+        path="/products"
+        data="{{dataProducts}}"
+        order-by-child="categories/{{categoryID}}/name"
+        equal-to="Мотоциклети">
+    </firebase-query>
+  </template>
+  <script>
+    Polymer({
+      is: 'velona-data',
+
+      properties: {
+        categoryName: String,
+        categoryID: {
+          type: String,
+          value: "0202"
+        },
+        dataCategories: {
+            type: Object,
+            notify: true
+        },
+        dataProducts: {
+            type: Object,
+            notify: true
+        }
+      }
+    });
+  </script>
+</dom-module>

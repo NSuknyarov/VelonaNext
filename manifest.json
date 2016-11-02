@@ -1,0 +1,7 @@
+{
+  "name": "velona",
+  "short_name": "velona",
+  "description": "Next generation Velona store",
+  "start_url": "/",
+  "display": "standalone"
+}

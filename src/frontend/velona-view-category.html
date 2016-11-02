@@ -1,0 +1,76 @@
+ <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<link rel="import" href="velona-data.html">
+
+<dom-module id="velona-view-category">
+  <template>
+    <style include="app-grid-style">
+      :host {
+        display: block;
+        --app-grid-columns: 3;
+        --app-grid-item-height: 100px;
+      }
+
+      ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    .item {
+      background-color: silver;
+    }
+    </style>
+
+    <app-route route="[[route]]" pattern="/:category" data="{{routeData}}"></app-route>
+    <velona-data
+      category-name="[[routeData.category]]"
+      data-categories="{{categories}}"
+      data-products="{{products}}">
+    </velona-data>
+    <h2>You are viewing [[routeData.category]] category.</h2>
+    <div>Path: [[showPath]] </div>
+    <ul class="app-grid">
+      <template is="dom-repeat" items="{{categories}}" as="category">
+        <li class="item">
+          <a href="/category/[[category.title]]">
+            <h3>Title: {{category.title}}</h3>
+          </a>
+          <div>Path: {{category.path}}</div>
+          <div>Descr: {{category.description}}</div>
+        </li>
+      </template>
+    </ul>
+
+    <ul class="app-grid">
+      <template is="dom-repeat" items="{{products}}" as="product">
+        <li class="item">
+          <h3>Title: {{product.title}}</h3>
+          <div>Descr: {{product.description}}</div>
+          <div>Manufacturer: {{product.manufacture_details.manufacture_name}}</div>
+        </li>
+      </template>
+    </ul>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'velona-view-category',
+
+      properties: {
+        route: Object,
+        categories: Object,
+        routeData: Object,
+        products: Object,
+        showPath: String
+      },
+
+      _categoryPath: function(categories) {
+          console.log("vaaal = "+JSON.stringify(this.categories));
+          return "Nope";
+      }
+
+    });
+  </script>
+</dom-module>

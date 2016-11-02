@@ -1,0 +1,68 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<dom-module id="velona-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{data}}" tail="{{subroute}}"></app-route>
+    <h2>Velona NEXT</h2>
+    <iron-selector
+        selected="[[page]]"
+        attr-for-selected="name"
+        role="navigation">
+      <a name="home" href="/home">Home</a>
+      <a name="category" href="/category/">Category</a>
+    </iron-selector>
+
+    <iron-pages
+      selected="[[page]]"
+      attr-for-selected="name"
+      role="main">
+      <velona-view-home name="home"></velona-view-home>
+      <velona-view-category name="category" route="[[subroute]]"></velona-view-category>
+    </iron-pages>
+
+    <footer>
+      Web development: NSuknyarov
+    </footer>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'velona-app',
+
+      properties: {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged'
+        }
+      },
+
+      observers: [
+        '_routePageChanged(data.page)'
+      ],
+
+      _routePageChanged: function(page) {
+        this.page = page || 'home';
+      },
+
+      _pageChanged: function(page) {
+        // console.log("SubRoute = " + this.subroute);
+        var resolvedPageUrl = this.resolveUrl('velona-view-' + page + '.html');
+        this.importHref(resolvedPageUrl, null, null, true);
+      }
+
+    });
+  </script>
+  </dom-module>
