@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<script src="../../bower_components/firebase/firebase.js"></script>
+
+
+<dom-module id="velona-view-categories">
+  <template>
+    <style include="app-grid-style">
+      :host {
+        display: block;
+        --app-grid-columns: 3;
+        --app-grid-item-height: 100px;
+      }
+
+      ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    .item {
+      background-color: silver;
+    }
+    </style>
+
+    <app-route route="[[route]]" pattern="/:category" data="{{routeData}}"></app-route>
+
+    <h1>Category title: [[categoryTitle]]</h1>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'velona-view-categories',
+
+      properties: {
+        categoryTitle: {
+          type: String,
+          notify: true,
+          value: ''
+        }
+      },
+
+      ready: function() {
+        this._connectFirebase();
+      },
+
+      _connectFirebase: function(){
+        var config = {
+          apiKey: "AIzaSyA0UEiF6fR7B_64rWTRuymp6GEc1uB9VQE",
+          authDomain: "nextv3-eac68.firebaseapp.com",
+          databaseURL: "https://nextv3-eac68.firebaseio.com",
+          storageBucket: "nextv3-eac68.appspot.com",
+          messagingSenderId: "273923767368"
+        };
+        firebase.initializeApp(config);
+        var database = firebase.database();
+        var data = database.ref('/categories/cat1').once('value').then(function(snapshot){
+          var e = document.querySelector('velona-view-categories');
+          e._setTitle(snapshot.val().title);
+        });
+
+      },
+
+      _setTitle: function(title){
+        this.categoryTitle = title;
+      }
+
+    });
+  </script>
+</dom-module>

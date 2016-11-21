@@ -22,12 +22,20 @@
         order-by-child="parent"
         equal-to="[[categoryName]]">
     </firebase-query>
+
+    <firebase-query
+        id="queryCurrentCategory"
+        path="/categories"
+        data="{{dataCurrentCategory}}"
+        order-by-child="title"
+        equal-to="[[categoryName]]">
+    </firebase-query>
     <firebase-query
         id="queryProducts"
         path="/products"
         data="{{dataProducts}}"
         order-by-child="categories/{{categoryID}}/name"
-        equal-to="Мотоциклети">
+        equal-to="[[categoryName]]">
     </firebase-query>
   </template>
   <script>
@@ -36,19 +44,37 @@
 
       properties: {
         categoryName: String,
-        categoryID: {
-          type: String,
-          value: "0202"
-        },
+        categoryId: String,
         dataCategories: {
             type: Object,
             notify: true
+        },
+        dataCurrentCategory: {
+            type: Object,
+            notify: true,
+            observer: '_getIdCurrentCategory'
         },
         dataProducts: {
             type: Object,
             notify: true
         }
+      },
+
+      _getIdCurrentCategory: function(newVal,oldVal) {
+
+        this.notifySplices('dataCurrentCategory');
+        console.log("----NEW------");
+        console.log(newVal);
+        console.log("----OLD------");
+        console.log(oldVal);
+        console.log(this.dataCurrentCategory);
+        // var it = this.get(['dataCurrentCategory', 0202]);
+        // var item = this.get(['dataCurrentCategory',1]);
+        // var value = this.get('dataCurrentCategory.id');
+        // console.log(this.dataCurrentCategory);
+      //  this.categoryId = this.dataCurrentCategory.id;
       }
+
     });
   </script>
 </dom-module>

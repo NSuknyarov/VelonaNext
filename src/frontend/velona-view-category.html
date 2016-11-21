@@ -22,14 +22,19 @@
     }
     </style>
 
-    <app-route route="[[route]]" pattern="/:category" data="{{routeData}}"></app-route>
+    <app-route route="[[route]]" pattern="/:category" data="{{routeData}}" tail={{subroute}}></app-route>
+    <app-route route="[[subroute]]" pattern="/:id" data="{{subrouteData}}"></app-route>
     <velona-data
       category-name="[[routeData.category]]"
+      category-id="[[subrouteData.id]]"
       data-categories="{{categories}}"
-      data-products="{{products}}">
+      data-products="{{products}}"
+      data-current-category="{{currentCategoryObject}}">
     </velona-data>
     <h2>You are viewing [[routeData.category]] category.</h2>
-    <div>Path: [[showPath]] </div>
+    <template is="dom-repeat" items="{{currentCategoryObject}}">
+      <div>Path: [[item.path]] </div>
+    </template>
     <ul class="app-grid">
       <template is="dom-repeat" items="{{categories}}" as="category">
         <li class="item">
@@ -41,7 +46,6 @@
         </li>
       </template>
     </ul>
-
     <ul class="app-grid">
       <template is="dom-repeat" items="{{products}}" as="product">
         <li class="item">
@@ -51,7 +55,6 @@
         </li>
       </template>
     </ul>
-
   </template>
 
   <script>
@@ -60,15 +63,31 @@
 
       properties: {
         route: Object,
+        subroute: Object,
         categories: Object,
         routeData: Object,
+        subrouteData: Object,
         products: Object,
-        showPath: String
+        showPath: String,
+        currentCategoryObject: {
+          type: Object,
+          observer: 'categoryTitleChanged'
+        }
       },
 
-      _categoryPath: function(categories) {
-          console.log("vaaal = "+JSON.stringify(this.categories));
-          return "Nope";
+      categoryTitleChanged: function(val) {
+        // console.log(val);
+        // var p = [{a:'1'},{b:'2',path:'33'}];
+        // console.log(p);
+        // this.notifyPath('currentCategoryObject.path');
+        // var value = this.get(['currentCategoryObject',1]);
+        // console.log(this.currentCategoryObject);
+        // for (var i=0;i<p.length;i++) {
+        //   console.log(p[i]);
+        // }
+        // for (let v of val) {
+        //   console.log("sadda"+v);
+        // }
       }
 
     });
