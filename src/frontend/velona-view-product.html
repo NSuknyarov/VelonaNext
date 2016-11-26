@@ -1,0 +1,48 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<link rel="import" href="velona-data-product.html">
+
+<dom-module id="velona-view-product">
+  <template>
+    <style include="app-grid-style">
+      :host {
+        display: block;
+        --app-grid-columns: 3;
+        --app-grid-item-height: 100px;
+      }
+
+      ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    .item {
+      background-color: silver;
+    }
+    </style>
+
+    <app-route route="[[route]]" pattern="/:product/:id" data="{{routeData}}"></app-route>
+    <velona-data-product
+      product-id="[[routeData.id]]"
+      data-product="{{product}}">
+    </velona-data-product>
+      <template is="dom-repeat" items="{{product}}" as="productObj">
+        <h2>[[productObj.title]]</h2>
+        <div>Описание: {{productObj.description}}</div>
+      </template>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'velona-view-product',
+
+      properties: {
+        routeData: Object,
+        product: Object,
+        currentCategoryObject: Object
+      }
+
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
+
+<dom-module id="velona-data-product">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <!-- <firebase-app
+        auth-domain="nextv3-eac68.firebaseapp.com"
+        database-url="https://nextv3-eac68.firebaseio.com"
+        api-key="AIzaSyA0UEiF6fR7B_64rWTRuymp6GEc1uB9VQE">
+    </firebase-app> -->
+    <firebase-query
+        id="queryProduct"
+        path="/products"
+        data="{{dataProduct}}"
+        order-by-child="id"
+        equal-to="[[productId]]">
+    </firebase-query>
+  </template>
+  <script>
+    Polymer({
+      is: 'velona-data-product',
+
+      properties: {
+        productId: String,
+        dataProduct: {
+            type: Object,
+            notify: true
+        }
+      }
+
+    });
+  </script>
+</dom-module>

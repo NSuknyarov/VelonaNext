@@ -17,41 +17,40 @@
       list-style: none;
     }
 
-    .item {
-      background-color: silver;
-    }
     </style>
 
-    <app-route route="[[route]]" pattern="/:category" data="{{routeData}}" tail={{subroute}}></app-route>
-    <app-route route="[[subroute]]" pattern="/:id" data="{{subrouteData}}"></app-route>
+    <app-route route="[[route]]" pattern="/:category/:id" data="{{routeData}}"></app-route>
     <velona-data
       category-name="[[routeData.category]]"
-      category-id="[[subrouteData.id]]"
+      category-id="[[routeData.id]]"
       data-categories="{{categories}}"
       data-products="{{products}}"
       data-current-category="{{currentCategoryObject}}">
     </velona-data>
-    <h2>You are viewing [[routeData.category]] category.</h2>
+    <h2>Преглеждаш категория [[routeData.category]].</h2>
     <template is="dom-repeat" items="{{currentCategoryObject}}">
-      <div>Path: [[item.path]] </div>
+      <div>[[item.path]]</div>
     </template>
     <ul class="app-grid">
       <template is="dom-repeat" items="{{categories}}" as="category">
         <li class="item">
-          <a href="/category/[[category.title]]">
-            <h3>Title: {{category.title}}</h3>
+          <a href="/category/[[category.title]]/[[category.id]]">
+            <h3>{{category.title}}</h3>
           </a>
-          <div>Path: {{category.path}}</div>
-          <div>Descr: {{category.description}}</div>
+          <div>Път: {{category.path}}</div>
+          <div>Описание: {{category.description}}</div>
         </li>
       </template>
     </ul>
+    <hr>
     <ul class="app-grid">
       <template is="dom-repeat" items="{{products}}" as="product">
         <li class="item">
-          <h3>Title: {{product.title}}</h3>
-          <div>Descr: {{product.description}}</div>
-          <div>Manufacturer: {{product.manufacture_details.manufacture_name}}</div>
+          <a href="/product/[[product.title]]/[[product.id]]">
+            <h3>{{product.title}}</h3>
+          </a>
+          <div>Описание: {{product.short_description}}</div>
+          <div>Производител: {{product.manufacture_details.manufacture_name}}</div>
         </li>
       </template>
     </ul>
@@ -62,32 +61,11 @@
       is: 'velona-view-category',
 
       properties: {
-        route: Object,
-        subroute: Object,
         categories: Object,
         routeData: Object,
-        subrouteData: Object,
         products: Object,
         showPath: String,
-        currentCategoryObject: {
-          type: Object,
-          observer: 'categoryTitleChanged'
-        }
-      },
-
-      categoryTitleChanged: function(val) {
-        // console.log(val);
-        // var p = [{a:'1'},{b:'2',path:'33'}];
-        // console.log(p);
-        // this.notifyPath('currentCategoryObject.path');
-        // var value = this.get(['currentCategoryObject',1]);
-        // console.log(this.currentCategoryObject);
-        // for (var i=0;i<p.length;i++) {
-        //   console.log(p[i]);
-        // }
-        // for (let v of val) {
-        //   console.log("sadda"+v);
-        // }
+        currentCategoryObject: Object
       }
 
     });

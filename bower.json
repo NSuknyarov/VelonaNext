@@ -8,7 +8,8 @@
     "iron-selector": "PolymerElements/iron-selector#^1.5.2",
     "iron-pages": "PolymerElements/iron-pages#^1.0.8",
     "polymerfire": "firebase/polymerfire#^0.10.2",
-    "app-layout": "PolymerElements/app-layout#^0.10.4"
+    "app-layout": "PolymerElements/app-layout#^0.10.6",
+    "paper-button": "PolymerElements/paper-button#^1.0.14"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

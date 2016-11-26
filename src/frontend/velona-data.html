@@ -27,14 +27,14 @@
         id="queryCurrentCategory"
         path="/categories"
         data="{{dataCurrentCategory}}"
-        order-by-child="title"
-        equal-to="[[categoryName]]">
+        order-by-child="id"
+        equal-to="[[categoryId]]">
     </firebase-query>
     <firebase-query
         id="queryProducts"
         path="/products"
         data="{{dataProducts}}"
-        order-by-child="categories/{{categoryID}}/name"
+        order-by-child="categories/[[categoryId]]/name"
         equal-to="[[categoryName]]">
     </firebase-query>
   </template>
@@ -51,28 +51,12 @@
         },
         dataCurrentCategory: {
             type: Object,
-            notify: true,
-            observer: '_getIdCurrentCategory'
+            notify: true
         },
         dataProducts: {
             type: Object,
             notify: true
         }
-      },
-
-      _getIdCurrentCategory: function(newVal,oldVal) {
-
-        this.notifySplices('dataCurrentCategory');
-        console.log("----NEW------");
-        console.log(newVal);
-        console.log("----OLD------");
-        console.log(oldVal);
-        console.log(this.dataCurrentCategory);
-        // var it = this.get(['dataCurrentCategory', 0202]);
-        // var item = this.get(['dataCurrentCategory',1]);
-        // var value = this.get('dataCurrentCategory.id');
-        // console.log(this.dataCurrentCategory);
-      //  this.categoryId = this.dataCurrentCategory.id;
       }
 
     });

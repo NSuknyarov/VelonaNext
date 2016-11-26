@@ -55,7 +55,7 @@
         };
         firebase.initializeApp(config);
         var database = firebase.database();
-        var data = database.ref('/categories/cat1').once('value').then(function(snapshot){
+        var data = database.ref('/categories/0101').once('value').then(function(snapshot){
           var e = document.querySelector('velona-view-categories');
           e._setTitle(snapshot.val().title);
         });

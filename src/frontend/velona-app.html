@@ -1,42 +1,114 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 <dom-module id="velona-app">
   <template>
-    <style>
+    <style include="app-grid-style">
+
       :host {
         display: block;
+        --app-grid-columns: 3;
+        font-family: 'Roboto', 'Noto', sans-serif;
       }
+
+      ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    #header {
+      background-color: white;
+    }
+
+    .content {
+      margin-top: 20px;
+    }
+
+    footer {
+      background-color: #efefef;
+
+    }
+
+    #credits {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
     </style>
 
+    <!-- Routing  -->
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{data}}" tail="{{subroute}}"></app-route>
-    <h2>Velona NEXT</h2>
-    <iron-selector
+
+    <app-header-layout fullbleed>
+    <!-- Header -->
+    <app-header role="navigation" id="header" effects="waterfall" condenses reveals>
+      <app-toolbar>
+        <a href="/home">
+          <img src="../../images/logo.jpg" alt="velona next"></img>
+        </a>
+        <iron-selector
+            selected="[[page]]"
+            attr-for-selected="name"
+            role="navigation">
+          <a name="home" href="/home" tabindex="-1">
+            <paper-button>Начало</paper-button>
+          </a>
+          <a name="category" href="/category//" tabindex="-1">
+            <paper-button>Каталог</paper-button>
+          </a>
+          <a name="category" href="/" tabindex="-1">
+            <paper-button>Магазини</paper-button>
+          </a>
+        </iron-selector>
+      </app-toolbar>
+    </app-header>
+
+    <!-- Content -->
+    <div class="content">
+      <iron-pages
         selected="[[page]]"
         attr-for-selected="name"
-        role="navigation">
-      <a name="home" href="/home">Home</a>
-      <a name="category" href="/category/">Category</a>
-      <a name="categories" href="/categories/">Categories</a>
-    </iron-selector>
-
-    <iron-pages
-      selected="[[page]]"
-      attr-for-selected="name"
-      role="main">
-      <velona-view-home name="home"></velona-view-home>
-      <velona-view-category name="category" route="[[subroute]]"></velona-view-category>
-      <velona-view-categories name="categories" route="[[subroute]]"></velona-view-categories>
-    </iron-pages>
-
+        role="main">
+        <velona-view-home name="home"></velona-view-home>
+        <velona-view-category name="category" route="[[subroute]]"></velona-view-category>
+        <velona-view-categories name="categories" route="[[subroute]]"></velona-view-categories>
+        <velona-view-product name="product" route="[[subroute]]"></velona-view-product>
+      </iron-pages>
+    </div>
+    <!-- Footer -->
     <footer>
-      Web development: NSuknyarov
+      <ul class="app-grid">
+        <li class="item">
+          <h3>Информация</h3>
+          <div><a href="/categories/">Магазини</a></div>
+          <div><a href="/categories/">Общи условия</a></div>
+          <div><a href="/categories/">Доставка</a></div>
+          <div><a href="/categories/">Плащане</a></div>
+        </li>
+        <li class="item">
+          <h3>Експерименти</h3>
+          <div><a href="/categories/">Експеримент 3</a></div>
+          <div><a href="/categories/">Експеримент 4</a></div>
+        </li>
+        <li class="item">
+            <h3>Информация за магазина</h3>
+            <div>Адрес: Велона ООД, гр. Русе, ул. Михаил Арнаудов 2, Магазин Велона</div>
+            <div>Телефон за контакти: 0888 800 245</div>
+            <div>E-mail: velonabg@gmail.com</div>
+        </li>
+      </ul>
+      <div id="credits">&copy;Web development: NSuknyarov</div>
     </footer>
-
+    </app-header-layout>
   </template>
 
   <script>
