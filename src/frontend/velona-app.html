@@ -8,6 +8,8 @@
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
 
 <dom-module id="velona-app">
   <template>
@@ -65,10 +67,16 @@
           <a name="category" href="/category//" tabindex="-1">
             <paper-button>Каталог</paper-button>
           </a>
-          <a name="category" href="/" tabindex="-1">
+          <a name="stores" href="/stores" tabindex="-1">
             <paper-button>Магазини</paper-button>
           </a>
+          <a name="info" href="/info" tabindex="-1">
+            <paper-button>Информация</paper-button>
+          </a>
         </iron-selector>
+        <div main-title></div>
+        <iron-icon icon="communication:phone"></iron-icon>
+        <label>&nbsp 0888 00 245</label>
       </app-toolbar>
     </app-header>
 
@@ -82,6 +90,8 @@
         <velona-view-category name="category" route="[[subroute]]"></velona-view-category>
         <velona-view-categories name="categories" route="[[subroute]]"></velona-view-categories>
         <velona-view-product name="product" route="[[subroute]]"></velona-view-product>
+        <velona-view-stores name="stores" route="[[subroute]]"></velona-view-stores>
+        <velona-view-info name="info" route="[[subroute]]"></velona-view-info>
       </iron-pages>
     </div>
     <!-- Footer -->
@@ -89,8 +99,8 @@
       <ul class="app-grid">
         <li class="item">
           <h3>Информация</h3>
-          <div><a href="/categories/">Магазини</a></div>
-          <div><a href="/categories/">Общи условия</a></div>
+          <div><a href="/stores">Магазини</a></div>
+          <div><a href="/info">Общи условия</a></div>
           <div><a href="/categories/">Доставка</a></div>
           <div><a href="/categories/">Плащане</a></div>
         </li>
