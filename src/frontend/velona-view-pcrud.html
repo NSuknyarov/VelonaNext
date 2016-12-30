@@ -1,0 +1,139 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="firebase.html">
+
+<dom-module id="velona-view-pcrud">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 10px;
+      }
+    </style>
+    <firebase-query
+        id="categories"
+        path="/categories"
+        data="{{categoriesData}}"
+        order-by-child="id">
+    </firebase-query>
+
+    <h1>Добавяне на продукт</h1>
+    <paper-input
+      id="title" label="Наименование" value="{{product.title}}"
+    ></paper-input>
+    <paper-input
+      id="quantity" label="Количество" type="number" value="{{product.quantity}}"
+    ></paper-input>
+    <paper-textarea
+      id="shortDescr" label="Кратко описание" value="{{product.short_description}}"
+    ></paper-textarea>
+    <paper-textarea
+      id="longDescr" label="Пълно описание" value="{{product.description}}"
+    ></paper-textarea>
+    <paper-input
+      id="sku" label="SKU" value="{{product.sku}}"
+    ></paper-input>
+
+    <h3>Избери категории</h3>
+    <paper-listbox id="categoryList" multi>
+      <template is="dom-repeat" items="{{categoriesData}}" as="category">
+        <paper-item>{{category.path}}</paper-item>
+      </template>
+    </paper-listbox>
+
+    <h3>Цени</h3>
+    <paper-input
+      id="wholesalePrice"
+      label="Едрова цена"
+      type="number"
+      value="{{pricing.wholesale_price}}"
+    ></paper-input>
+    <paper-input
+      id="retailPrice"
+      label="Дребнова цена"
+      type="number"
+      value="{{pricing.retail_price}}"
+    ></paper-input>
+    <paper-input
+      id="promoPrice"
+      label="Промоционална цена"
+      type="number"
+      value="{{pricing.promo_price}}"
+    ></paper-input>
+
+    <paper-button id="saveBtn" raised>Запази</paper-button>
+    <paper-button id="cancelBtn" raised>Откажи</paper-button>
+
+    <firebase-document
+      id="doc"
+      path="/products"
+      data="{{productsData}}">
+    </firebase-document>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'velona-view-pcrud',
+
+      properties: {
+        productsData: Object,
+        categoriesData: Object,
+        categories: {
+          type: Object,
+          value: function() {return{}}
+        },
+        pricing: {
+          type: Object,
+          value: function() {return{}}
+        },
+        product: {
+          type: Object,
+          value: function() {return{}}
+        }
+      },
+
+      listeners: {
+        'saveBtn.tap':'saveProduct'
+      },
+
+      generateID: function() {
+        //TODO
+      },
+
+      saveProduct: function(e) {
+        var arr = {};
+        var arrSelectedCategories = this.$.categoryList.selectedItems;
+        for (var i=0;i<arrSelectedCategories.length;i++) {
+          for (cat of this.categoriesData) {
+            if (cat.path === arrSelectedCategories[i].innerText) {
+              var obj = {};
+              obj["name"] = cat.title;
+              arr[cat.id] = obj;
+            }
+          }
+        }
+        this.product.categories = arr;
+        this.product.pricing = this.pricing;
+        //Save the new product to firebase
+        this.$.doc.ref.push(this.product);
+        //Clear all inputs and etc.
+        this.$.title.value = '';
+        this.$.quantity.value = '';
+        this.$.shortDescr.value = '';
+        this.$.longDescr.value = '';
+        this.$.sku.value = '';
+        this.$.wholesalePrice.value = '';
+        this.$.retailPrice.value = '';
+        this.$.promoPrice.value = '';
+      }
+
+    });
+  </script>
+</dom-module>
