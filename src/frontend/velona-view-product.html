@@ -27,10 +27,8 @@
       product-id="[[routeData.id]]"
       data-product="{{product}}">
     </velona-data-product>
-      <template is="dom-repeat" items="{{product}}" as="productObj">
-        <h2>[[productObj.title]]</h2>
-        <div>Описание: {{productObj.description}}</div>
-      </template>
+    <h2>[[product.title]]</h2>
+    <div>Описание: {{product.description}}</div>
   </template>
 
   <script>
@@ -39,8 +37,7 @@
 
       properties: {
         routeData: Object,
-        product: Object,
-        currentCategoryObject: Object
+        product: Object
       }
 
     });

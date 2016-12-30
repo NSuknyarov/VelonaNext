@@ -46,7 +46,7 @@
     <ul class="app-grid">
       <template is="dom-repeat" items="{{products}}" as="product">
         <li class="item">
-          <a href="/product/[[product.title]]/[[product.id]]">
+          <a href="/product/[[product.title]]/[[product.$key]]">
             <h3>{{product.title}}</h3>
           </a>
           <div>Описание: {{product.short_description}}</div>

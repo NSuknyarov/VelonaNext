@@ -28,6 +28,7 @@
 
     #header {
       background-color: white;
+      padding: 20px;
     }
 
     .content {
@@ -36,12 +37,15 @@
 
     footer {
       background-color: #efefef;
-
     }
 
     #credits {
       text-align: center;
       margin-bottom: 10px;
+    }
+
+    .app-grid {
+      margin: 20px;
     }
 
     </style>
@@ -53,7 +57,7 @@
     <app-header-layout fullbleed>
     <!-- Header -->
     <app-header role="navigation" id="header" effects="waterfall" condenses reveals>
-      <app-toolbar>
+      <app-toolbar id="toolbar">
         <a href="/home">
           <img src="../../images/logo.jpg" alt="velona next"></img>
         </a>
@@ -92,6 +96,7 @@
         <velona-view-product name="product" route="[[subroute]]"></velona-view-product>
         <velona-view-stores name="stores" route="[[subroute]]"></velona-view-stores>
         <velona-view-info name="info" route="[[subroute]]"></velona-view-info>
+        <velona-view-pcrud name="pcrud" route="[[subroute]]"></velona-view-pcrud>
       </iron-pages>
     </div>
     <!-- Footer -->
@@ -107,7 +112,7 @@
         <li class="item">
           <h3>Експерименти</h3>
           <div><a href="/categories/">Експеримент 1</a></div>
-          <div><a href="/categories/">Експеримент 2</a></div>
+          <div><a href="/pcrud/">Експеримент - добави продукт</a></div>
         </li>
         <li class="item">
             <h3>Информация за магазина</h3>
