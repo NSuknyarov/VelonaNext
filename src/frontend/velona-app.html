@@ -10,6 +10,7 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="firebase.html">
 
 <dom-module id="velona-app">
   <template>
@@ -49,10 +50,17 @@
     }
 
     </style>
-
     <!-- Routing  -->
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{data}}" tail="{{subroute}}"></app-route>
+
+    <!-- User Authentication -->
+    <firebase-auth
+      id="auth"
+      user="{{user}}"
+      status-known="{{statusKnown}}"
+      provider="google"
+    ></firebase-auth>
 
     <app-header-layout fullbleed>
     <!-- Header -->
@@ -79,6 +87,12 @@
           </a>
         </iron-selector>
         <div main-title></div>
+        <template is="dom-if" if="[[user]]">
+          <a href="/administration"><paper-button>[[user.displayName]]</paper-button></a>
+        </template>
+        <span hidden$="[[!user]]">--</span>
+        <paper-button on-tap="login" hidden$="[[user]]">Вход</paper-button>
+        <paper-button on-tap="logout" hidden$="[[!user]]">Изход</paper-button>
         <iron-icon icon="communication:phone"></iron-icon>
         <label>&nbsp 0888 00 245</label>
       </app-toolbar>
@@ -96,7 +110,11 @@
         <velona-view-product name="product" route="[[subroute]]"></velona-view-product>
         <velona-view-stores name="stores" route="[[subroute]]"></velona-view-stores>
         <velona-view-info name="info" route="[[subroute]]"></velona-view-info>
+        <velona-view-administration name="administration" route="[[subroute]]"></velona-view-administration>
         <velona-view-pcrud name="pcrud" route="[[subroute]]"></velona-view-pcrud>
+        <velona-view-ccrud name="ccrud" route="[[subroute]]"></velona-view-ccrud>
+        <velona-view-plist name="plist" route="[[subroute]]"></velona-view-plist>
+        <velona-view-clist name="clist" route="[[subroute]]"></velona-view-clist>
       </iron-pages>
     </div>
     <!-- Footer -->
@@ -112,7 +130,7 @@
         <li class="item">
           <h3>Експерименти</h3>
           <div><a href="/categories/">Експеримент 1</a></div>
-          <div><a href="/pcrud/">Експеримент - добави продукт</a></div>
+          <div><a href="/administration/">Администрация</a></div>
         </li>
         <li class="item">
             <h3>Информация за магазина</h3>
@@ -135,6 +153,12 @@
           type: String,
           reflectToAttribute: true,
           observer: '_pageChanged'
+        },
+        user: {
+          type: Object
+        },
+        statusKnown: {
+          type: Object
         }
       },
 
@@ -150,6 +174,14 @@
         // console.log("SubRoute = " + this.subroute);
         var resolvedPageUrl = this.resolveUrl('velona-view-' + page + '.html');
         this.importHref(resolvedPageUrl, null, null, true);
+      },
+
+      login: function() {
+        return this.$.auth.signInWithPopup();
+      },
+
+      logout: function() {
+        return this.$.auth.signOut();
       }
 
     });
