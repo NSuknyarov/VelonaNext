@@ -23,7 +23,6 @@
         data="{{categoriesData}}"
         order-by-child="id">
     </firebase-query>
-
     <h1>Добавяне на продукт</h1>
     <paper-input
       id="title" label="Наименование" value="{{product.title}}"
@@ -115,7 +114,7 @@
             if (cat.path === arrSelectedCategories[i].innerText) {
               var obj = {};
               obj["name"] = cat.title;
-              arr[cat.id] = obj;
+              arr[cat.$key] = obj;
             }
           }
         }

@@ -1,0 +1,37 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<dom-module id="velona-view-administration">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 10px;
+      }
+    </style>
+    <h1>Административен панел</h1>
+    <a href="/pcrud/">
+      <paper-button id="" raised>Добавяне нов продукт</paper-button>
+    </a>
+    <a href="/plist/">
+      <paper-button id="" raised>Списък с продукти</paper-button>
+    </a>
+    <a href="/ccrud/">
+      <paper-button id="" raised>Добавяне нова категория</paper-button>
+    </a>
+    <a href="/clist/">
+      <paper-button id="" raised>Списък с категории</paper-button>
+    </a>
+    <hr>
+    <paper-button id="" raised>Поръчки</paper-button>
+    <paper-button id="" raised>Потребители</paper-button>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'velona-view-administration'
+
+    });
+  </script>
+</dom-module>

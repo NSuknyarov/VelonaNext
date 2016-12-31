@@ -1,0 +1,91 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="firebase.html">
+
+<dom-module id="velona-view-ccrud">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 10px;
+      }
+    </style>
+    <firebase-query
+        id="categories"
+        path="/categories"
+        data="{{categoriesData}}"
+        order-by-child="id">
+    </firebase-query>
+
+    <h1>Добавяне на категория</h1>
+    <paper-input
+      id="title" label="Наименование" value="{{category.title}}"
+    ></paper-input>
+    <paper-textarea
+      id="description" label="Описание" value="{{category.description}}"
+    ></paper-textarea>
+
+    <h3>Избери категория родител</h3>
+    <paper-listbox id="categoryList">
+      <paper-item>root</paper-item>
+      <template is="dom-repeat" items="{{categoriesData}}" as="categoryData">
+        <paper-item>{{categoryData.path}}</paper-item>
+      </template>
+    </paper-listbox>
+
+    <paper-button id="saveBtn" raised>Запази</paper-button>
+    <paper-button id="cancelBtn" raised>Откажи</paper-button>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'velona-view-ccrud',
+
+      properties: {
+        canSave: {
+          type: Boolean,
+          value: false
+        },
+        categoriesData: Object,
+        category: {
+          type: Object,
+          value: function() {return{}}
+        }
+      },
+
+      listeners: {
+        'saveBtn.tap':'saveCategory'
+      },
+
+      saveCategory: function(e) {
+        var selectedCategory = this.$.categoryList.selectedItem;
+        for (cat of this.categoriesData) {
+          if (selectedCategory.innerText == "root") {
+            this.category.parent = "";
+            this.category.path = this.category.title;
+            this.canSave = true;
+          } else if (cat.path === selectedCategory.innerText) {
+              this.category.parent = cat.path;
+              this.category.path = cat.path+"/"+this.category.title;
+              this.canSave = true;
+          }
+        }
+        //Save the new product to firebase
+        if (this.canSave) {
+          this.$.categories.ref.push(this.category);
+        }
+        //Clear all inputs and etc.
+        this.$.title.value = '';
+        this.$.description.value = '';
+      }
+
+    });
+  </script>
+</dom-module>

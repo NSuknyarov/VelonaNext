@@ -1,0 +1,68 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="../../bower_components/iron-data-table/iron-data-table.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="firebase.html">
+
+<dom-module id="velona-view-clist">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin: 10px;
+      }
+
+      #productTable {
+        height: 600px;
+        --iron-data-table-row-hover: {
+          background: #efefef;
+        }
+      }
+    </style>
+    <firebase-query
+        id="categoryQuery"
+        path="/categories"
+        data="{{categoryData}}"
+    ></firebase-query>
+
+    <h1>Списък с категории</h1>
+
+    <iron-data-table id="productTable" items="[[categoryData]]">
+      <data-table-column name="SKU">
+        <template>[[item.path]]</template>
+      </data-table-column>
+      <data-table-column name="Наименование">
+        <template>[[item.title]]</template>
+      </data-table-column>
+      <data-table-column name="Статус">
+        <template>ДА</template>
+      </data-table-column>
+      <data-table-column name="Операции">
+        <template>
+          <a href="/category/[[item.title]]/[[item.$key]]">
+            <paper-button>Преглед</paper-button>
+          </a>
+          <a href="/category/[[item.title]]/[[item.$key]]">
+            <paper-button>Редакция</paper-button>
+          </a>
+          <a href="/category/[[item.title]]/[[item.$key]]">
+            <paper-button>Изтриване</paper-button>
+          </a>
+        </template>
+      </data-table-column>
+    </iron-data-table>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'velona-view-clist',
+
+      properties: {
+        categoryData: Object,
+      }
+
+    });
+  </script>
+</dom-module>
