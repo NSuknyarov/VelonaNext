@@ -1,8 +1,4 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
-<link rel="import" href="../../bower_components/polymerfire/firebase-document.html">
-<link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
-<link rel="import" href="firebase.html">
 
 <dom-module id="velona-data">
   <template>
@@ -18,13 +14,10 @@
         order-by-child="parent"
         equal-to="[[categoryName]]">
     </firebase-query>
-
-    <firebase-query
+    <firebase-document
         id="queryCurrentCategory"
-        path="/categories"
-        data="{{dataCurrentCategory}}"
-        order-by-child="id"
-        equal-to="[[categoryId]]">
+        path="/categories/[[categoryId]]"
+        data="{{dataCurrentCategory}}">
     </firebase-query>
     <firebase-query
         id="queryProducts"
