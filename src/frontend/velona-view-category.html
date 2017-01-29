@@ -10,12 +10,72 @@
         display: block;
         margin: 10px;
         --app-grid-columns: 3;
-        --app-grid-item-height: 100px;
+
+      }
+
+      .app-grid > .item {
+        -webkit-flex: 1 calc(33% - 20px);
+        flex: 1 calc(33% - 20px);
+        max-width: calc(33% - 20px);
+        height: 30vmax;
+        min-height: 250px;
+        margin: 10px;
+        text-decoration: none;
+        background-color: white;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
       }
 
       ul {
       padding: 0;
       list-style: none;
+    }
+
+    .catalog-image {
+      width: 75%;
+      height: 75%;
+    }
+
+
+    @media (max-width: 1200px) {
+      .app-grid > .item {
+        -webkit-flex: 1 calc(50% - 20px);
+        flex: 1 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+        margin: 10px;
+        text-decoration: none;
+        background-color: white;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+      .catalog-image {
+        width: 50%;
+        height: 50%;
+      }
+    }
+
+
+    @media (max-width: 400px) {
+      .app-grid > .item {
+        -webkit-flex: 1 calc(100% - 10px);
+        flex: 1 calc(1000% - 10px);
+        max-width: calc(100% - 10px);
+        margin: 5px;
+        text-decoration: none;
+        background-color: white;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+      .catalog-image {
+        width: 50%;
+        height: 50%;
+      }
     }
 
     </style>
@@ -32,25 +92,27 @@
     <div>[[currentCategoryObject.path]]</div>
     <ul class="app-grid">
       <template is="dom-repeat" items="{{categories}}" as="category">
-        <li class="item">
-          <a href="/category/[[category.title]]/[[category.$key]]">
+        <a class="item" href="/category/[[category.title]]/[[category.$key]]">
+          <li>
+            <img class="catalog-image" src="../../images/backpack.png">
             <h3>{{category.title}}</h3>
-          </a>
-          <div>Път: {{category.path}}</div>
-          <div>Описание: {{category.description}}</div>
-        </li>
+            <div>Път: {{category.path}}</div>
+            <div>Описание: {{category.description}}</div>
+          </li>
+        </a>
       </template>
     </ul>
     <hr>
     <ul class="app-grid">
       <template is="dom-repeat" items="{{products}}" as="product">
-        <li class="item">
-          <a href="/product/[[product.title]]/[[product.$key]]">
+        <a class="item" href="/product/[[product.title]]/[[product.$key]]">
+          <li>
+            <img class="catalog-image" src="../../images/helmet.png">
             <h3>{{product.title}}</h3>
-          </a>
-          <div>Описание: {{product.short_description}}</div>
-          <div>Производител: {{product.manufacture_details.manufacture_name}}</div>
-        </li>
+            <!-- <div>Описание: {{product.short_description}}</div>
+            <div>Производител: {{product.manufacture_details.manufacture_name}}</div> -->
+          </li>
+        </a>
       </template>
     </ul>
   </template>

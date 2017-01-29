@@ -8,8 +8,8 @@
     <style include="app-grid-style">
       :host {
         display: block;
-        --app-grid-columns: 3;
-        --app-grid-item-height: 100px;
+        --app-grid-columns: 2;
+        background-color: white;
       }
 
       ul {
@@ -18,7 +18,14 @@
     }
 
     .item {
-      background-color: silver;
+      -webkit-flex: 1 calc(50% - 20px);
+      flex: 1 calc(50% - 20px);
+    }
+
+    .catalog-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     </style>
 
@@ -27,8 +34,17 @@
       product-id="[[routeData.id]]"
       data-product="{{product}}">
     </velona-data-product>
-    <h2>[[product.title]]</h2>
-    <div>Описание: {{product.description}}</div>
+    <ul class="app-grid">
+      <li class="item">
+        <div class="catalog-image">
+        <img src="../../images/helmet.png">
+        </div>
+      </li>
+      <li class="item">
+        <h2>[[product.title]]</h2>
+        <div>Описание: {{product.description}}</div>
+      </li>
+    </ul>
   </template>
 
   <script>

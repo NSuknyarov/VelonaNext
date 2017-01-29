@@ -6,18 +6,38 @@
       :host {
         display: block;
         --app-grid-columns: 1;
-        margin: auto;
-        width: 50%;
+
+      }
+
+      .app-grid > .item {
+        margin: 10px;
+        text-decoration: none;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
       }
 
       ul {
         padding: 0;
         list-style: none;
       }
+
+      @media (max-width: 810px) {
+        .catalog-image {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+
+      @media (max-width: 400px) {
+      }
+
     </style>
     <ul class="app-grid">
-      <li><img class="item" src="../../images/quattronovex_banner.png"></img></li>
-      <li><img class="item" src="../../images/monte-grappa-banner.png"></img></li>
+      <li class="item"><img class="catalog-image" src="../../images/quattronovex_banner.png"></img></li>
+      <li class="item"><img class="catalog-image" src="../../images/monte-grappa-banner.png"></img></li>
     </ul>
   </template>
 
