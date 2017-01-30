@@ -1,0 +1,53 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<script src="../../bower_components/firebase/firebase.js"></script>
+
+<dom-module id="velona-firebase-upload">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <input type="file" value="upload" id="fileButton"/>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'velona-firebase-upload',
+
+      properties: {
+        files: {
+          type: Object
+        }
+      },
+
+      listeners: {
+        'fileButton.change': 'fileUpload'
+      },
+
+      fileUpload: function(e) {
+        var config = {
+          apiKey: "AIzaSyA0UEiF6fR7B_64rWTRuymp6GEc1uB9VQE",
+          authDomain: "nextv3-eac68.firebaseapp.com",
+          databaseURL: "https://nextv3-eac68.firebaseio.com",
+          storageBucket: "nextv3-eac68.appspot.com",
+          messagingSenderId: "273923767368"
+        };
+        firebase.initializeApp(config);
+
+        // Get file
+         this.files = e.target.files[0];
+
+        // Create a storage ref
+        var storageRef = firebase.storage().ref("categoryImages/" + file.name);
+
+        // Upload file
+        var task = storageRef.put(file);
+      }
+
+
+
+    });
+  </script>
+</dom-module>

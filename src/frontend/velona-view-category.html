@@ -94,10 +94,10 @@
       <template is="dom-repeat" items="{{categories}}" as="category">
         <a class="item" href="/category/[[category.title]]/[[category.$key]]">
           <li>
-            <img class="catalog-image" src="../../images/backpack.png">
-            <h3>{{category.title}}</h3>
-            <div>Път: {{category.path}}</div>
-            <div>Описание: {{category.description}}</div>
+            <img class="catalog-image" src="[[category.image]]">
+            <h3>[[category.title]]</h3>
+            <div>Път: [[category.path]]</div>
+            <div>Описание: [[category.description]]</div>
           </li>
         </a>
       </template>
@@ -108,7 +108,7 @@
         <a class="item" href="/product/[[product.title]]/[[product.$key]]">
           <li>
             <img class="catalog-image" src="../../images/helmet.png">
-            <h3>{{product.title}}</h3>
+            <h3>[[product.title]]</h3>
             <!-- <div>Описание: {{product.short_description}}</div>
             <div>Производител: {{product.manufacture_details.manufacture_name}}</div> -->
           </li>

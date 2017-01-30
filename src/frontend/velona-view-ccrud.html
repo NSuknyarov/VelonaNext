@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="../../bower_components/polymerfire/firebase-query.html">
 <link rel="import" href="firebase.html">
+<link rel="import" href="velona-firebase-upload.html">
 
 <dom-module id="velona-view-ccrud">
   <template>
@@ -30,6 +31,10 @@
     <paper-textarea
       id="description" label="Описание" value="{{category.description}}"
     ></paper-textarea>
+    <!-- <paper-textarea
+      id="image" label="Изображение" value="{{category.image}}"
+    ></paper-textarea> -->
+    <velona-firebase-upload></velona-firebase-upload>
 
     <h3>Избери категория родител</h3>
     <paper-listbox id="categoryList">
